@@ -79,29 +79,25 @@ const updateSliderPos = () => {
   lastActiveSliderItem = heroSliderItems[currentSlidePos];
 };
 
-const nextSlide = () => {
+const nextSlide = function () {
   if (currentSlidePos >= heroSliderItems.length - 1) {
-    currentSliderPos = 0;
+    currentSlidePos = 0;
   } else {
     currentSlidePos++;
   }
-
   updateSliderPos();
 };
-
 heroSliderNextBtn.addEventListener("click", nextSlide);
 
-const prevSlider = () => {
+const prevSlide = function () {
   if (currentSlidePos <= 0) {
     currentSlidePos = heroSliderItems.length - 1;
   } else {
     currentSlidePos--;
   }
-
   updateSliderPos();
 };
-
-heroSliderPrevBtn.addEventListener("click", prevSlider);
+heroSliderPrevBtn.addEventListener("click", prevSlide);
 
 // auto slide
 let autoSlideInterval;
