@@ -58,3 +58,65 @@ window.addEventListener("scroll", () => {
     header.classList.remove("active");
   }
 });
+
+/*
+ * HERO SECTION
+ */
+
+const heroSlider = document.querySelector("[data-hero-slider]"),
+  heroSliderItems = document.querySelectorAll("[data-hero-slider-item]"),
+  heroSliderPrevBtn = document.querySelector("[data-prev-btn]"),
+  heroSliderNextBtn = document.querySelector("[data-next-btn]");
+
+let currentSlidePos = 0;
+let lastActiveSliderItem = heroSliderItems[0];
+
+const updateSliderPos = () => {
+  lastActiveSliderItem.classList.remove("active");
+
+  heroSliderItems[currentSlidePos].classList.add("active");
+
+  lastActiveSliderItem = heroSliderItems[currentSlidePos];
+};
+
+const nextSlide = () => {
+  if (currentSlidePos >= heroSliderItems.length - 1) {
+    currentSliderPos = 0;
+  } else {
+    currentSlidePos++;
+  }
+
+  updateSliderPos();
+};
+
+heroSliderNextBtn.addEventListener("click", nextSlide);
+
+const prevSlider = () => {
+  if (currentSlidePos <= 0) {
+    currentSlidePos = heroSliderItems.length - 1;
+  } else {
+    currentSlidePos--;
+  }
+
+  updateSliderPos();
+};
+
+heroSliderPrevBtn.addEventListener("click", prevSlider);
+
+// auto slide
+let autoSlideInterval;
+
+const autoSlide = () => {
+  autoSlideInterval = setInterval(function () {
+    nextSlide();
+  }, 7000);
+};
+
+addEventOnElements([heroSliderNextBtn, heroSliderPrevBtn], "mouseover", function () {
+  clearInterval(autoSlideInterval);
+});
+
+addEventOnElements([heroSliderNextBtn, heroSliderPrevBtn], "mouseout", autoSlide);
+
+// autoslide when we enter the website
+window.addEventListener("load", autoSlide);
